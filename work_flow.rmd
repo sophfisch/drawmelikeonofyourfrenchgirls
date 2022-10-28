@@ -1,0 +1,5 @@
+research event in literature-->find features that influence survival
+research event in dataset
+statistical analysis with ancova and then tukey
+
+
