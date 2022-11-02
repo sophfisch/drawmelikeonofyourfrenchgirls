@@ -47,8 +47,10 @@ function fare(df)
     mis = ismissing.(Fare)
 
     for i in 1:size(df, 1)
-        if df.Fare[i] == 0
-            Fare[i] = means[df.Pclass[i]]
+        if mis[i] == false 
+            if df.Fare[i] == 0
+                Fare[i] = means[df.Pclass[i]]
+            end
         end
     end
     for i in 1:length(mis)
@@ -79,8 +81,6 @@ function replace_missing_age(df)
     #train_df["Age"].isnull().sum()
     return new_age
 end
-
-nm_age = replace_missing_age(titanic)
 
 
 function group_age(df)
