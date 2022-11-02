@@ -18,22 +18,29 @@ count(iszero.(data.Fare)) #15 places where fare == 0
 subset(data, :Fare => x -> x .== 0).Pclass
 
 # replace Fare == 0 with mean of respective Pclass
-Fare = data.Fare
-mean1 = subset(data, :Pclass => x -> x .== 1).Fare |> mean
-mean2 = subset(data, :Pclass => x -> x .== 2).Fare |> mean
-mean3 = subset(data, :Pclass => x -> x .== 3).Fare |> mean
+function fare(df)
+    Fare = df.Fare
+    mean1 = subset(df, :Pclass => x -> x .== 1).Fare |> mean
+    mean2 = subset(df, :Pclass => x -> x .== 2).Fare |> mean
+    mean3 = subset(df, :Pclass => x -> x .== 3).Fare |> mean
 
-means = [mean1, mean2, mean3]
+    means = [mean1, mean2, mean3]
 
-for i in 1:size(data, 1)
-    if data.Fare[i] == 0
-        Fare[i] = means[data.Pclass[i]]
+    for i in 1:size(df, 1)
+        if df.Fare[i] == 0
+            Fare[i] = means[df.Pclass[i]]
+        end
     end
+    return Fare
 end
 
-count(iszero.(Fare))
-Fare
-Pclass = data.Pclass
+Fare = fare(data)
+
+function pclass(df)
+    return df.Pclass
+end
+
+Pclass = pclass(data)
 
 
 #plots
