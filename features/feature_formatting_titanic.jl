@@ -47,14 +47,14 @@ function fare(df)
     mis = ismissing.(Fare)
 
     for i in 1:size(df, 1)
-        if mis[i] == false 
+        if mis[i] == 0 
             if df.Fare[i] == 0
                 Fare[i] = means[df.Pclass[i]]
             end
         end
     end
     for i in 1:length(mis)
-        if mis[i]
+        if mis[i] == 1
             Fare[i] = means[df.Pclass[i]]
         end
     end
