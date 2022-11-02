@@ -44,16 +44,22 @@ function fare(df)
     mean3 = subset(df, :Pclass => x -> x .== 3).Fare |> mean
 
     means = [mean1, mean2, mean3]
+    mis = ismissing.(Fare)
 
     for i in 1:size(df, 1)
         if df.Fare[i] == 0
             Fare[i] = means[df.Pclass[i]]
         end
     end
+    for i in 1:length(mis)
+        if mis[i]
+            Fare[i] = means[df.Pclass[i]]
+        end
+    end
     return Fare
 end
 
-fare = fare(data)
+Fare = fare(data)
 
 ############################ AGE ########################
 function replace_missing_age(df)
