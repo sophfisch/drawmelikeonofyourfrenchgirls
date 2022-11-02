@@ -80,8 +80,6 @@ function replace_missing_age(df)
     return new_age
 end
 
-nm_age = replace_missing_age(titanic)
-
 
 function group_age(df)
     age=replace_missing_age(df)
