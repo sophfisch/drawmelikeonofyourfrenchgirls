@@ -12,19 +12,20 @@ ismissing(titanic.Parch)
 #no missing values
 
 #sex binary encoded
-sex = titanic.Sex
-
-sex_bin = []
-fem = 0
-for (i,s) in enumerate(sex)
-    n = 0
-    if s == "female"
+function sex_binary(df)
+    sex_bin = []
+    for (i,s) in enumerate(df.Sex)
+        n = 0
+        if s == "female"
         n = 1
-        fem += 1
+        end
+        push!(sex_bin, n)
     end
-    push!(sex_bin, n)
+    return sex_bin
 end
+
 #female = 1, male = 0
+sex_bin = sex_binary(titanic)
 sex_df = DataFrame(sex_bin = sex_bin, survival = titanic.Survived)
 
 sex_grouped = groupby(sex_df, :sex_bin)
@@ -66,21 +67,18 @@ using Statistics: mean, std
 using Random
 using Impute
 
-age = titanic.Age
-df_age = DataFrame(age = age, survival = titanic.Survived)
-a = dropmissing(df_age)
 
 #age_nomissing = transform(df_age, names(df_age) .=> Impute.locf, renamecols=false)
 
 function replace_missing_age(df)
-    new_age = df
+    new_age = df.Age
     a = dropmissing(df)
-    m = mean(a[:, 1])
-    sd = std(a[:, 1])
-    is_missing = ismissing.(df.age)
+    m = mean(a.Age)
+    sd = std(a.Age)
+    is_missing = ismissing.(df.Age)
     for (i,v) in enumerate(is_missing)
         if v == 1
-        new_age[1,i] = rand((m - sd):(m + sd))
+        new_age[i] = rand((m - sd):(m + sd))
         end
     end
     
@@ -90,7 +88,7 @@ function replace_missing_age(df)
     return new_age
 end
 
-nm_age = replace_missing_age(df_age)
+nm_age = replace_missing_age(titanic)
 
 """
 1 -> age <= 12
@@ -101,31 +99,31 @@ nm_age = replace_missing_age(df_age)
 6 -> 61 < age
 """
 
-function group_age(df)
-    for (i,v) in enumerate(df.age)
+function group_age(age)
+    for (i,v) in enumerate(age)
         #1
         if v <= 12
-            df.age[i] = 1
+            age[i] = 1
         end
         #2
         if 12 < v <= 18
-            df.age[i] = 2
+            age[i] = 2
         end
         #3
         if 18 < v <= 30
-            df.age[i] = 3
+            age[i] = 3
         end
         #4
         if 30 < v <= 45
-            df.age[i] = 4
+            age[i] = 4
         end
         #5
         if 45 < v <= 60
-            df.age[i] = 5
+            age[i] = 5
         end
         #6
         if 60 < v
-            df.age[i] = 6
+            age[i] = 6
         end
     end
     return 
