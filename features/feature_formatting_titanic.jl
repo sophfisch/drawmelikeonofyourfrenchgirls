@@ -39,9 +39,9 @@ emb=embarked(df)
 # replace Fare == 0 with mean of respective Pclass
 function fare(df)
     Fare = df.Fare
-    mean1 = subset(df, :Pclass => x -> x .== 1).Fare |> mean
-    mean2 = subset(df, :Pclass => x -> x .== 2).Fare |> mean
-    mean3 = subset(df, :Pclass => x -> x .== 3).Fare |> mean
+    mean1 = subset(dropmissing(df), :Pclass => x -> x .== 1).Fare |> mean
+    mean2 = subset(dropmissing(df), :Pclass => x -> x .== 2).Fare |> mean
+    mean3 = subset(dropmissing(df), :Pclass => x -> x .== 3).Fare |> mean
 
     means = [mean1, mean2, mean3]
     mis = ismissing.(Fare)
@@ -53,12 +53,13 @@ function fare(df)
             end
         end
     end
+
     for i in 1:length(mis)
         if mis[i] == 1
             Fare[i] = means[df.Pclass[i]]
         end
     end
-    return Fare
+    return round.(Int, Fare)
 end
 
 Fare = fare(data)
@@ -111,9 +112,10 @@ function group_age(df)
             age[i] = 6
         end
     end
-    return age
+    return convert.(Int, age)
 end
-age=group_age(df)
+
+age_feature=group_age(df)
 
 ######################## SEX ###################
 
@@ -126,7 +128,7 @@ function sex_binary(df)
         end
         push!(sex_bin, n)
     end
-    return sex_bin
+    return convert.(Int, sex_bin)
 end
 sex=sex_binary(df)
 ######################## SIBLINGS RELATIVES ####################
@@ -138,7 +140,7 @@ relatives = parents .+ siblings
 
 
 
-tit=DataFrame(Survived=df.Survived, Pclass=df.Pclass, Sex=sex, Age=age, Relatives=relatives, Fare=fare, Embarked=emb) 
+tit=DataFrame(Survived=df.Survived, Pclass=df.Pclass, Sex=sex, Age=age_feature, Relatives=relatives, Fare=Fare, Embarked=emb) 
 
 
 
