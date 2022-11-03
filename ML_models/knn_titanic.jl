@@ -26,12 +26,13 @@ function KNN_classification(X_train, y_train; nsplits=5, scoring="accuracy", n_j
     kf = StratifiedKFold(n_splits=nsplits, shuffle=true)
     gridsearch = GridSearchCV(model2, parameters, scoring=scoring, cv=kf, n_jobs=n_jobs, verbose=0)
     # train the model
-    fit!(gridsearch,X_train,y_train)
+    knn=fit!(gridsearch,X_train,y_train)
     best_estimator = gridsearch.best_estimator_
-    return best_estimator
+    return best_estimator, knn
 end
 
-best_est2 = KNN_classification(X,y)
+best_est2, knn = KNN_classification(X,y)
 model = KNeighborsClassifier(best_est2)
+knn.score(X,y)
 
 
