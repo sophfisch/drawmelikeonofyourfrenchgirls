@@ -63,8 +63,7 @@ submission.PassengerId = original.PassengerId
 submission.Survived = Y_pred
 submission
 
-CSV.write("submission_decision_tree.csv", submission)
+CSV.write("new_submission_decision_tree.csv", submission)
 
 plot_tree(clf, filled = true)
-
 
