@@ -65,5 +65,3 @@ submission
 
 CSV.write("new_submission_decision_tree.csv", submission)
 
-plot_tree(clf, filled = true)
-
