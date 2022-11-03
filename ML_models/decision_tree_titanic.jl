@@ -22,7 +22,6 @@ X_test = Matrix(X_test)
 
 clf = DecisionTreeClassifier()
 
-clf.fit(X_train, Y_train)
 
 clf.score(X_train, Y_train)
 
@@ -42,3 +41,4 @@ CSV.write("submission_decision_tree.csv", submission)
 dot_data = export_graphviz(clf) 
 graph = GraphViz.Source(dot_data) 
 graph.render("iris")  =#
+clf.fit(X, Y)
