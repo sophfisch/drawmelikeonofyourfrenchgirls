@@ -1,6 +1,6 @@
 using ScikitLearn
 import ScikitLearn: fit!, predict
-using LsqFit
+using CSV
 @sk_import neighbors: NearestNeighbors
 
 
@@ -12,10 +12,11 @@ import ScikitLearn: CrossValidation
 @sk_import metrics: accuracy_score
 
 #use titanic_train.csv as df
-
+f = "../features/titanic_train.csv"
+df = CSV.read(f, DataFrame)
 
 y=select(df, :Survived)
-y=convert(Array, y)
+y=y.Survived
 X=select(df, Not(:Survived))
 X=Matrix(X)
 # KNN
@@ -32,6 +33,5 @@ end
 
 best_est2 = KNN_classification(X,y)
 model = KNeighborsClassifier(best_est2)
-
 
 

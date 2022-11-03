@@ -11,7 +11,7 @@ using Pipe
 
 # GETTING ALL FEATURES READY
 ############## EMBARKED ################
-path="train.csv"
+path="../features/train.csv"
 
 df=CSV.read(path, DataFrame)
 
@@ -62,7 +62,7 @@ function fare(df)
     return round.(Int, Fare)
 end
 
-Fare = fare(data)
+Fare = fare(df)
 
 ############################ AGE ########################
 function replace_missing_age(df)
