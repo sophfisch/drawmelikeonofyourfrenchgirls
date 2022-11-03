@@ -21,7 +21,7 @@ Y_train = tit.Survived
 
 X_test = Matrix(X_test)
 
-clf = DecisionTreeClassifier()
+clf = DecisionTreeClassifier(max_depth = 3)
 clf.fit(X_train, Y_train)
 clf.score(X_train, Y_train)
 
