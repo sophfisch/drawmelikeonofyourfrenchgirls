@@ -21,7 +21,7 @@ Y_train = tit.Survived
 
 X_test = Matrix(X_test)
 
-clf = DecisionTreeClassifier()
+clf = DecisionTreeClassifier(max_depth = 3)
 clf.fit(X_train, Y_train)
 clf.score(X_train, Y_train)
 
@@ -30,7 +30,7 @@ clf.feature_importances_
 # Plot the tree
 using PyCall
 @sk_import tree: export_graphviz
-export_graphviz(clf, out_file="mytree", class_names=["Survived", "Died"], feature_names=names(tit[:, Not(:Survived)]), leaves_parallel=true, impurity=false, rounded=true, filled=true, label="root", proportion=true)
+export_graphviz(clf, out_file="mytree", class_names=["Died", "Survived"], feature_names=names(tit[:, Not(:Survived)]), leaves_parallel=true, impurity=false, rounded=true, filled=true, label="root", proportion=true)
 
 
 # tune parameters

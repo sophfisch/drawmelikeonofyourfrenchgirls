@@ -124,7 +124,7 @@ function sex_binary(df)
     for (i,s) in enumerate(df.Sex)
         n = 0
         if s == "female"
-        n = 1
+            n = 1
         end
         push!(sex_bin, n)
     end
